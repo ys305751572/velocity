@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.leoman.utils.Result;
 import java.util.Map;
 
 #set($entityName = ${entity.name.substring(0, 1).toLowerCase()} + ${entity.name.substring(1)})
@@ -30,10 +31,35 @@ public class ${controllerClass.name} extends CommonController {
         return "";
     }
 
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String add(Long id,Model model) {
+		if(id != null) {
+			model.addAttribute("${$entityName}",${serviceName}.queryByPK(id))
+		}
+		return "";
+	}
+	
+	@RequestMapping(value = "/save")
+    @ResponseBody
+    public Result save(${entity.name} ${entityName}) {
+        ${serviceName}.save(${entityName});
+        return Result.success();
+    }
+   
+    @RequestMapping(value = "/deleteBatch", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deleteBatch(String ids) {
+        String[] arrayId = JsonUtil.json2Obj(ids, String[].class);
+        for (String id : arrayId) {
+            ${entity.name} ${entityName} = service.queryByPK(id);
+            ${serviceName}.delete(${entityName});
+        }
+        return Result.success();
+    }
    
     @RequestMapping(value = "/list")
     @ResponseBody
-    public void list(HttpServletRequest request,
+    public Map<String,Object> list(HttpServletRequest request,
                      HttpServletResponse response,
                      Integer draw,
                      Integer start,
@@ -44,11 +70,10 @@ public class ${controllerClass.name} extends CommonController {
             int pageNum = getPageNum(start, length);
             Page<${entity.name}> page = ${serviceClass.name}.findPage(${entityName},pageNum,length);
             Map<String, Object> result = DataTableFactory.fitting(draw, page);
-            WebUtil.print(response, result);
         } catch (Exception e) {
             GeneralExceptionHandler.log(e);
-            WebUtil.print(response, emptyData);
         }
+        return result;
     }
     
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
