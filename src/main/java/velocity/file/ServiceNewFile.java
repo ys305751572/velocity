@@ -29,7 +29,7 @@ public class ServiceNewFile extends NewFile {
 	@Override
 	public void process() {
 		VelocityContext context = VelocityContextUtils.getVelocityContext();
-		context.put("facadeClass", this);
+		context.put("serviceClass", this);
 		try {
 			VelocityUtil.vmToFile(context, TEMPLATE_PATH, getPath());
 		} catch (IOException e) {

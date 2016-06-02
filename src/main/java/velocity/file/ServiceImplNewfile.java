@@ -33,7 +33,7 @@ public class ServiceImplNewfile extends NewFile {
 	@Override
 	public void process() {
 		VelocityContext context = VelocityContextUtils.getVelocityContext();
-		context.put("facadeImplClass", this);
+		context.put("serviceImplClass", this);
 		try {
 			VelocityUtil.vmToFile(context, TEMPLATE_PATH, getPath());
 		} catch (IOException e) {

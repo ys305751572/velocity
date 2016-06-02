@@ -30,7 +30,7 @@ public class DaoNewFile extends NewFile {
 	@Override
 	public void process() {
 		VelocityContext context = VelocityContextUtils.getVelocityContext();
-		context.put("applicationClass", this);
+		context.put("daoClass", this);
 		try {
 			VelocityUtil.vmToFile(context, TEMPLATE_PATH, getPath());
 		} catch (IOException e) {

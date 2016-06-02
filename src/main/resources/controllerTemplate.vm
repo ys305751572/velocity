@@ -1,10 +1,10 @@
-package com.leoman.user.controller;
+package ${controllerClass.packageName};
 
 import com.leoman.common.controller.common.CommonController;
 import com.leoman.common.exception.GeneralExceptionHandler;
 import com.leoman.common.factory.DataTableFactory;
-import ${entityName};
-import ${applicationClassName};
+import ${controllerClass.packageName}.${serviceClass.name};
+import ${controllerClass.packageName}.${serviceClass.name};
 import com.leoman.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,15 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-
+#set($entityName = ${entity.name.substring(0, 1).toLowerCase()} + ${entity.name.substring(1)})
 @Controller
 @RequestMapping(value = "")
-public class ${actionName} extends CommonController {
-
+public class ${controllerClass.name} extends CommonController {
+    #set($serviceName = ${serviceClass.name.substring(0, 1).toLowerCase()} + ${serviceClass.name.substring(1)})
     @Autowired
-    private ${applicationClassName} ${applicationName};
+    private ${serviceClass.name} ${serviceName};
 
-    
     @RequestMapping(value = "/index")
     public String index() {
         return "";
@@ -33,17 +32,17 @@ public class ${actionName} extends CommonController {
 
    
     @RequestMapping(value = "/list")
+    @ResponseBody
     public void list(HttpServletRequest request,
                      HttpServletResponse response,
-                     Integer sortId,
                      Integer draw,
                      Integer start,
                      Integer length,
-                     User user,
+                     ${entity.name} ${entityName},
                      Model model) {
         try {
             int pageNum = getPageNum(start, length);
-            Page<${entityName}> page = ${applicationName}.findPage(user,sortId,pageNum,length);
+            Page<${entity.name}> page = ${serviceClass.name}.findPage(${entityName},pageNum,length);
             Map<String, Object> result = DataTableFactory.fitting(draw, page);
             WebUtil.print(response, result);
         } catch (Exception e) {
