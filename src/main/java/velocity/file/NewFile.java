@@ -8,6 +8,8 @@ public abstract class NewFile {
 
 	public abstract void process();
 
+	public abstract String getPath();
+	
 	public NewFile(String name,String projectPath,String packageName) {
 		this.name = name;
 		this.packageName = packageName;

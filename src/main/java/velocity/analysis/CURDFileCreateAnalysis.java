@@ -24,7 +24,17 @@ public class CURDFileCreateAnalysis {
 		createServiceFile(projectPath, entityUI, entityUI.getEntityModel(), newFiles);
 		createServiceImplFile(projectPath, entityUI, entityUI.getEntityModel(), newFiles);
 		createControllerFile(projectPath, entityUI, entityUI.getEntityModel(), newFiles);
+		
+		// ==========================================================================
+		createListPage(projectPath, entityUI, entityUI.getEntityModel(), newFiles);
+		
 		return newFiles;
+	}
+
+	private static void createListPage(String projectPath, EntityViewUI entityUI, EntityModel entityModel,
+			List<NewFile> newFiles) {
+		ControllerNewFile controllerNewFile = new ControllerNewFile("list",projectPath, entityModel.getPackpageName(),entityUI);
+		newFiles.add(controllerNewFile);
 	}
 
 	private static void createControllerFile(String projectPath, EntityViewUI entityUI, EntityModel entityModel,
