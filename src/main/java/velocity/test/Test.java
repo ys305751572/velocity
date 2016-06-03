@@ -12,9 +12,11 @@ import velocity.model.ui.EntityViewUI;
 public class Test {
 
 	public static void main(String[] args) {
-
+		
 		String path = "F:/workspace_velocity/velocity/src/main/java/velocity/book/entity/Book.java";
 
+		
+		
 		CURDCoreAnalysis util = CURDCoreAnalysis.getInstance();
 		EntityModel entity = util.analysis(path);
 
