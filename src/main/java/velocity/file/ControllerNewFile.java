@@ -16,16 +16,16 @@ public class ControllerNewFile extends NewFile {
 
 	private EntityModel entityModel;
 
-	public ControllerNewFile(String name, String projectName, String packageName, EntityViewUI entityViewUI) {
-		super(name, projectName, packageName);
+	public ControllerNewFile(String name, String projectPath, String packageName, EntityViewUI entityViewUI) {
+		super(name, projectPath, packageName);
 		entityModel = entityViewUI.getEntityModel();
 	}
 
 	public String getPath() {
-		String[] temparr = this.entityModel.getClassName().split("\\.");
-		String lastPackageName = temparr[(temparr.length - 2)];
+		String packageName = getPackageName().replaceAll("\\.", "/");
+		packageName = packageName.substring(0, packageName.indexOf("/entity"));
 		String targetPath = MessageFormat.format("{0}/src/main/java/{1}/{2}/{3}.java",
-				new Object[] { this.projectPath, getPackageName().replaceAll("\\.", "/"), lastPackageName, getName() });
+				new Object[] { this.projectPath, packageName,"controller", getName()});
 		return targetPath;
 	}
 

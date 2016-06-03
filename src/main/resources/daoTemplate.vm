@@ -1,8 +1,8 @@
-package com.leoman.user.dao;
+package ${daoClass.packageName};
 
-import com.leoman.user.entity.User;
+import ${daoClass.packageName}.${entity.name};
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface ${entity.name}Dao extends JpaRepository<${entity.name}, Long>,JpaSpecificationExecutor<${entity.name}> {
+public interface ${entity.name}Dao extends IBaseJpaRepository<${entity.name}> {
 }

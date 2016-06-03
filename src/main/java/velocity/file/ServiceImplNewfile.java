@@ -25,8 +25,10 @@ public class ServiceImplNewfile extends NewFile {
 	}
 
 	public String getPath() {
-		String targetPath = MessageFormat.format("{0}/src/main/java/{1}/{2}.java",
-				new Object[] { this.projectPath, getPackageName().replaceAll("\\.", "/"), getName() });
+		String packageName = getPackageName().replaceAll("\\.", "/");
+		packageName = packageName.substring(0, packageName.indexOf("/entity"));
+		String targetPath = MessageFormat.format("{0}/src/main/java/{1}/{2}/{3}/{4}.java",
+				new Object[] { this.projectPath, packageName, "service", "impl" , getName() });
 		return targetPath;
 	}
 

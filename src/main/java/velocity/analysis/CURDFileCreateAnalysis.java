@@ -29,19 +29,19 @@ public class CURDFileCreateAnalysis {
 
 	private static void createControllerFile(String projectPath, EntityViewUI entityUI, EntityModel entityModel,
 			List<NewFile> newFiles) {
-		ControllerNewFile controllerNewFile = new ControllerNewFile(entityModel.getName(), projectPath, entityModel.getPackpageName(), entityUI);
+		ControllerNewFile controllerNewFile = new ControllerNewFile(entityModel.getName() + "Controller", projectPath, entityModel.getPackpageName(), entityUI);
 		newFiles.add(controllerNewFile);
 	}
 
 	private static void createDaoImplFile(String projectPath, EntityViewUI entityUI, EntityModel entityModel,
 			List<NewFile> newFiles) {
-		DaoNewFile daoNewFile = new DaoNewFile(entityModel.getName(), projectPath, entityModel.getPackpageName(), entityModel);
+		DaoNewFile daoNewFile = new DaoNewFile(entityModel.getName() + "Dao", projectPath, entityModel.getPackpageName(), entityModel);
 		newFiles.add(daoNewFile);
 	}
 
 	private static void createServiceFile(String projectPath, EntityViewUI entityUI, EntityModel entityModel,
 			List<NewFile> newFiles) {
-		ServiceNewFile serviceNewFile = new ServiceNewFile(entityModel.getName(), projectPath, entityModel.getPackpageName(), entityModel);
+		ServiceNewFile serviceNewFile = new ServiceNewFile(entityModel.getName() + "Service", projectPath, entityModel.getPackpageName(), entityModel);
 		newFiles.add(serviceNewFile);
 	}
 
