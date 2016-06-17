@@ -5,14 +5,14 @@ import velocity.model.ValidateRule;
 
 public class UIWidget {
 
-	protected String id;
-    protected String name;
-    protected String defaultValue;
-    protected String express;
-    protected ColunmType colunmType;
-    protected boolean required;
-    protected ValidateRule validateRule;
-    protected String validateExpress;
+	protected String id;                     // id
+    protected String name;                   // 字段名字
+    protected String defaultValue;           // 默认值
+    protected String express;                
+    protected ColunmType colunmType;         // 字段类型  defualtText,image,richText
+    protected boolean required;              // 是否必填
+    protected ValidateRule validateRule;     // 验证表达式
+    protected String validateExpress;        // 自定义表达式
     
 	public String getId() {
 		return id;

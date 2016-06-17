@@ -2,32 +2,27 @@ package velocity.file;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-
 import org.apache.velocity.VelocityContext;
-
-import velocity.model.ListModel;
-import velocity.model.QueryModel;
+import velocity.model.AddModel;
 import velocity.model.ui.EntityViewUI;
 import velocity.util.VelocityContextUtils;
 import velocity.util.VelocityUtil;
 
-public class ListPageNewFile extends NewFile {
+public class DetailPageNewFile extends NewFile {
 
-	private static final String TEMPLATE_PATH = "list.jsp.vm";
+	private static final String TEMPLATE_PATH = "detail.jsp.vm";
 
-	private QueryModel queryModel;
-	private ListModel listModel;
+	private AddModel addModel;
 
-	public ListPageNewFile(String name, String projectPath, String packageName, EntityViewUI ui) {
+	public DetailPageNewFile(String name, String projectPath, String packageName, EntityViewUI ui) {
 		super(name, projectPath, packageName);
-		this.queryModel = ui.getQueryModel();
-		this.listModel = ui.getListModel();
+		this.addModel = ui.getAddModel();
 	}
 
 	@Override
 	public void process() {
 		VelocityContext context = VelocityContextUtils.getVelocityContext();
-		context.put("listClass", this);
+		context.put("detailClass", this);
 		try {
 			VelocityUtil.vmToFile(context, TEMPLATE_PATH, getPath());
 		} catch (IOException e) {
@@ -41,7 +36,7 @@ public class ListPageNewFile extends NewFile {
 		
 		packageName = packageName.substring(0, packageName.indexOf("/entity"));
 		String targetPath = MessageFormat.format("{0}/src/main/java/{1}/{2}/{3}.jsp",
-				new Object[] { this.projectPath, packageName, this.name, "list" });
+				new Object[] { this.projectPath, packageName, this.name, "detail" });
 		return targetPath;
 	}
 }

@@ -12,7 +12,6 @@
     <!-- CSS -->
     <%@ include file="../inc/new/css.jsp" %>
 </head>
-#set($entityName = ${entity.name.substring(0, 1).toLowerCase()} + ${entity.name.substring(1)})
 <body id="skin-cloth">
 <%@ include file="../inc/new/header.jsp" %>
 <div class="clearfix"></div>
@@ -60,9 +59,12 @@
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    #foreach($col in listClass.listModel)
-                    	<th>$col.viewName</th>
-                    #end
+                    <th>医生姓名</th>
+                    <th>所在科室</th>
+                    <th>手机号</th>
+                    <th>性别</th>
+                    <th>医生等级</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
             </table>
@@ -93,7 +95,7 @@
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/$entityName/list",
+                        "url": "${contextPath}/admin/doctor/list",
                         "type": "POST"
                     },
                     "columns": [
@@ -105,11 +107,21 @@
                                 return checkbox;
                             }
                         },
-                        #foreach($col in ${listClass.listModel}) 
-                        	{
-                        		"data" : $col.name
-                        	}
-                        #end
+                        {"data": "name"},
+                        {"data": "depart"},
+                        {"data": "mobile"},
+                        {
+                            "data": "gender",
+                            "render": function (data) {
+                                if (data == 1) {
+                                    return '男';
+                                }
+                                else {
+                                    return '女';
+                                }
+                            }
+                        },
+                        {"data": "level"},
                         {
                             "data": "id",
                             "render": function (data) {
@@ -123,24 +135,35 @@
                         }
                     ],
                     "fnServerParams": function (aoData) {
-                    	#foreach($query in #{listClass.queryModel})
-                    	 	aoData.name = $("#${query.name}").val();
-                    	#end
-                       
+                        aoData.name = $("#name").val();
                     }
                 });
             },
             sfUserInfo: function (id) {
-                window.location.href = "${contextPath}/admin/${entityName}/detail?id=" + id;
+                $.ajax({
+                    "url": "${contextPath}/admin/doctor/sfDoctorInfo",
+                    "data": {
+                        "id": id
+                    },
+                    "dataType": "json",
+                    "type": "POST",
+                    "success": function (result) {
+                        if (!result.status) {
+                            $common.fn.notify(result.msg);
+                            return;
+                        }
+                        window.location.href = "${contextPath}/admin/doctor/detail?id=" + id;
+                    }
+                });
             },
             edit: function (id) {
-                window.location.href = "${contextPath}/admin/${entityName}/edit?id=" + id;
+                window.location.href = "${contextPath}/admin/doctor/edit?id=" + id;
             },
             delete: function () {
                 var checkBox = $("#dataTables tbody tr").find('input[type=checkbox]:checked');
                 var ids = checkBox.getInputId();
                 $.ajax({
-                    url : "${contextPath}/admin/${entityName}/deleteBatch",
+                    url : "${contextPath}/admin/doctor/deleteBatch",
                     data : {
                         "ids" : JSON.stringify(ids)
                     },
